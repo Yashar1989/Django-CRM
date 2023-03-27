@@ -8,7 +8,6 @@ def home(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        print(username, password)
         # Authenticate user
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -18,9 +17,8 @@ def home(request):
         else:
             messages.error(request, "Invalid username or password", extra_tags='danger')
             return redirect('home')
-
-
-    return render(request, 'website/home.html', {})
+    else:
+        return render(request, 'website/home.html', {})
 
 def login_user(request):
     pass
