@@ -53,5 +53,15 @@ def customer_record(request, pk):
         customer_record = Record.objects.get(pk=pk)
         return render(request, 'website/record.html', {'record': customer_record})
     else:
-        messages.success(request, "You Must Be Logged In to View This Record", extra_tags='error')
+        messages.success(request, "You Must Be Logged In to View This Record", extra_tags='secondary')
+        return redirect('home')
+    
+def delete_record(request, pk):
+    if request.user.is_authenticated:
+        delete_it = Record.objects.get(pk=pk)
+        delete_it.delete()
+        messages.success(request, "Records Deleted Successfully", extra_tags='danger')
+        return redirect('home')
+    else:
+        messages.success(request, "You Must Be Logged In to View This Record", extra_tags='secondary')
         return redirect('home')
