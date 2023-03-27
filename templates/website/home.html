@@ -2,15 +2,48 @@
 
 {% block content %}
 
-<div class="col-md-6 offset-md-3">
+
   {% if messages %}
     {% for msg in messages %}
       <div class="alert alert-{{msg.tags}}" role="alert">{{msg}}</div>
     {% endfor %}
   {% endif %}
   {% if user.is_authenticated %}
-    <h1>Hello {{user.username}}!</h1>
+    <h2>Records</h2>
+
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Address</th>
+          <th scope="col">ZIP Code</th>
+          <th scope="col">Created At</th>
+          <th scope="col">ID</th>
+        </tr>
+      </thead>
+      <tbody>
+
+          {% if records %}
+          {% for record in records %}
+          <tr>
+            <td>{{ record.first_name }} {{ record.last_name }}</td>
+            <td>{{ record.email }}</td>
+            <td>{{ record.phone }}</td>
+            <td>{{ record.address }}</td>
+            <td>{{ record.zipcode }}</td>
+            <td>{{ record.created_at }}</td>
+            <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+
+      </tbody>
+    </table>
+
   {% else %}
+  <div class="col-md-6 offset-md-3">
     <h1>Login</h1>
     <form method="post" action="{% url 'home' %}">
             <div class="card my-2">
@@ -35,11 +68,10 @@
                 </div>
               </form>
             </div>
-    
-
     </form>
+  </div>
     {% endif %}
-</div>
+
 
 
 {% endblock %}
