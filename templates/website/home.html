@@ -3,8 +3,16 @@
 {% block content %}
 
 <div class="col-md-6 offset-md-3">
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-{{msg.tags}}">{{msg}}</div>
+    {% endfor %}
+  {% endif %}
+  {% if user.is_authenticated %}
+    <h1>Hello {{user.username}}!</h1>
+  {% else %}
     <h1>Login</h1>
-<form method="post" action="{% url 'home' %}">
+    <form method="post" action="{% url 'home' %}">
             <div class="card my-2">
     
               <form class="card-body cardbody-color p-lg-2">
@@ -14,14 +22,13 @@
                     width="200px" alt="profile">
                 </div>
     
-                <div class="col-md-8 mx-auto mb-2">
-                  <input type="text" class="form-control" id="Username" aria-describedby="emailHelp"
-                    placeholder="User Name">
+                <div class="col-md-9 mx-auto mb-2">
+                  <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="User Name" required>
                 </div>
-                <div class="col-md-8 mx-auto mb-2">
-                  <input type="password" class="form-control" id="password" placeholder="password">
+                <div class="col-md-9 mx-auto mb-2">
+                  <input type="password" class="form-control" name="password" placeholder="password" required>
                 </div>
-                <div class="text-center col-md-8 mx-auto"><button type="submit" class="btn btn-color px-3 mb-3 w-100">Login</button></div>
+                <div class="text-center col-md-9 mx-auto"><button type="submit" class="btn btn-color px-3 mb-3 w-100">Login</button></div>
                 <div id="emailHelp" class="form-text text-center mb-3 text-dark">Not
                   Registered? <a href="#" class="text-dark fw-bold"> Create an
                     Account</a>
@@ -30,7 +37,8 @@
             </div>
     
 
-</form>
+    </form>
+    {% endif %}
 </div>
 
 
