@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
-
 def home(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -24,4 +23,9 @@ def login_user(request):
     pass
 
 def logout_user(request):
-    pass
+    logout(request)
+    messages.info(request, "You have been logged out successfully")
+    return redirect('home')
+
+def register_user(request):
+    return render(request, 'website/register.html', {})
